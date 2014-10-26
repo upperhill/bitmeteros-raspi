@@ -50,7 +50,7 @@ BITMETER.tabShowSummary = function(){
 					tdHosts.html('No data from other hosts');
 				} else {
 					tdHosts.html('');
-					$.each(BITMETER.model.getSummary().hosts, function(i,o){
+					jQuery.each(BITMETER.model.getSummary().hosts, function(i,o){
 						tdHosts.append(o + '<br>');	
 					});
 				}

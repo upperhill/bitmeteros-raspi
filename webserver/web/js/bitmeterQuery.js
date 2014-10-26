@@ -18,7 +18,7 @@ $(function(){
      // We do some validation on the date values entered by the user, empty fields don't cause an error
         df = $('#fromDate').datepicker('option', 'dateFormat');
         try{
-            fd = $.datepicker.parseDate(df, $('#fromDate').val());
+            fd = jQuery.datepicker.parseDate(df, $('#fromDate').val());
          // Default to 0 (ie as far back in time as possible)
             fd = (fd ? fd.getTime()/1000 : 0);
         } catch (fde) {
@@ -26,7 +26,7 @@ $(function(){
         }
 
         try{
-            td = $.datepicker.parseDate(df, $('#toDate').val());
+            td = jQuery.datepicker.parseDate(df, $('#toDate').val());
          // Default to now (ie as far forward in time as possible)
             td = (td ? td.getTime()/1000 : BITMETER.getTime());
         } catch (tde) {
@@ -40,7 +40,7 @@ $(function(){
             reqTxt = BITMETER.addAdaptersToRequest('ajax.php?choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&from=' + fd + '&to=' + td + '&group=' + $('#queryDisplay').val());
             bitmeter_get(reqTxt, function(results){
                  // Store the results, adding in combined totals - we need them elsewhere
-                    $.each(results, function(i,o){
+                    jQuery.each(results, function(i,o){
                         o.cm = o.dl + o.ul;
                     });
                     BITMETER.model.setQueryResults(results);
@@ -59,7 +59,7 @@ $(function(){
         } else {
          // There was a problem with the dates, show an error and don't send the query
             $('#errMsgList').html('');
-            $.each(errList, function(i,msg){
+            jQuery.each(errList, function(i,msg){
                 $('#errMsgList').append('<li>' + msg + '</li>');
             });
             $('#queryErrBox').show();
@@ -100,7 +100,7 @@ $(function(){
         preProcess: function(data){
          // The grid needs our data in this format...
             var rows = [];
-            $.each(data, function(i,o){
+            jQuery.each(data, function(i,o){
              // Subtract the duration from the timestamp so the new value represents the start of the interval
                 rows.push({id: o.ts, cell: [o.ts - o.dr, o.dl, o.ul, o.dl + o.ul]});
             });
@@ -154,7 +154,7 @@ $(function(){
                         case 5: formatTxt = ''; break;
                     }
 
-                    return $.datepicker.formatDate(formatTxt, new Date(ts * 1000));
+                    return jQuery.datepicker.formatDate(formatTxt, new Date(ts * 1000));
 
                 } else {
                  // We are displaying both Dates and Times in the grid because the results are grouped per-hour, so do things slightly differently
@@ -171,7 +171,7 @@ $(function(){
                  // ts value has been adjusted to mark the start of the interval, so add 1 hour to get the end
                     endOfRange   = new Date((roundedTs + 3600) * 1000);
 
-                    return BITMETER.zeroPad(startOfRange.getHours()) + ':00-' + BITMETER.zeroPad(endOfRange.getHours()) + ':00 ' + $.datepicker.formatDate('dd M yy', startOfRange);
+                    return BITMETER.zeroPad(startOfRange.getHours()) + ':00-' + BITMETER.zeroPad(endOfRange.getHours()) + ':00 ' + jQuery.datepicker.formatDate('dd M yy', startOfRange);
                 }
             },
             BITMETER.formatAmount,

@@ -90,7 +90,7 @@ BITMETER.tabShowAlerts = function(){
      // Set the periods
         if (alertObj.periods && alertObj.periods.length) {
             BITMETER.createAlertModel.setTimesType(BITMETER.consts.alerts.timesSome);
-            $.each(alertObj.periods, function(i,o){
+            jQuery.each(alertObj.periods, function(i,o){
                 BITMETER.assert((o[0] === '*') && (o[1] === '*') && (o[2] === '*'));
                 var daysTxt = o[3].split(','),
                     days    = [0,0,0,0,0,0,0],
@@ -100,7 +100,7 @@ BITMETER.tabShowAlerts = function(){
                 fromHours = Number(parts[0]);
                 toHours   = parts.length > 1 ? Number(parts[1]) : fromHours;
 
-                $.each(daysTxt, function(i,o){
+                jQuery.each(daysTxt, function(i,o){
                     days[Number(o)] = 1;
                 });
 
@@ -116,7 +116,7 @@ BITMETER.tabShowAlerts = function(){
     }
 
     function updateAlerts(){
-        $.get('alert?action=list', function(alertsArray){
+        jQuery.get('alert?action=list', function(alertsArray){
             if (alertsArray && alertsArray.length){
                 $('#noAlerts').hide();
                 $('#alertsDisplay').show();
@@ -124,7 +124,7 @@ BITMETER.tabShowAlerts = function(){
                 var tbody = $('#alertsTable tbody');
                 tbody.html('');
 
-                $.each(alertsArray, function(i,o){
+                jQuery.each(alertsArray, function(i,o){
                     var tr           = $('<tr id="alertRow' + o.id + '"><td class="alertName">' + o.name + '</td></tr>'),
                         tdProgress   = $('<td></td>'),
                         progress     = $('<div class="alertProgress" id="progress' + o.id + '"></div>'),
@@ -202,7 +202,7 @@ BITMETER.updateAlertProgressBars = function(){
 
  // Loop once for each alert
     bitmeter_get('ajax.php?g=ALERTS&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&action=status', function(jsonData){
-        $.each(jsonData, function(i,o){
+        jQuery.each(jsonData, function(i,o){
             var value = o.current / o.limit,
                 barValue, statusTxt = (Math.round(value * 100) + '%');
 
@@ -648,8 +648,8 @@ BITMETER.updateCreateAlertViewFromModel = function(isUserEdit){
         } else if (BITMETER.arraysEqual(BITMETER.consts.alerts.arrWeekends, arrDays)){
             return "Weekends";
         } else {
-            var days = [], dayNames = $.datepicker.regional[''].dayNamesMin;
-            $.each(arrDays, function(i,o){
+            var days = [], dayNames = jQuery.datepicker.regional[''].dayNamesMin;
+            jQuery.each(arrDays, function(i,o){
                 if (o){
                     days.push(dayNames[i]);
                 }
@@ -669,7 +669,7 @@ BITMETER.updateCreateAlertViewFromModel = function(isUserEdit){
 
             $('#createAlertPeriodList tbody').html('');
             periodCount = 0;
-            $.each(BITMETER.createAlertModel.getPeriods(), function(k,v){
+            jQuery.each(BITMETER.createAlertModel.getPeriods(), function(k,v){
                 var tr = $('<tr></tr>'),
                     td1 = $('<td>' + describeDays(v[0]) + '</td>'),
                     td2 = $('<td>' + v[1] + '-' + v[2] + '</td>'),
@@ -789,9 +789,9 @@ BITMETER.updateCreateAlertViewFromModel = function(isUserEdit){
             function makePeriodsParam(){
                 var periods = [];
                 if (BITMETER.createAlertModel.getTimesType() === BITMETER.consts.alerts.timesSome){
-                    $.each(BITMETER.createAlertModel.getPeriods(), function(i,o){
+                    jQuery.each(BITMETER.createAlertModel.getPeriods(), function(i,o){
                         var wk = [], hr;
-                        $.each(o[0], function(i,o){
+                        jQuery.each(o[0], function(i,o){
                             if (o){
                                 wk.push(i);
                             }
@@ -958,10 +958,10 @@ $(function(){
     });
 
     $('#createAlertWeekdaysLabels td').each(function(i,o){
-        $(o).html($.datepicker.regional[''].dayNamesMin[i]);
+        $(o).html(jQuery.datepicker.regional[''].dayNamesMin[i]);
     });
     function setCreateAlertDays(arrDays){
-        $.each(arrDays, function(i,o){
+        jQuery.each(arrDays, function(i,o){
             $('#createAlertPeriodWeekday' + i).attr('checked', o ? 'checked' : '');
         });
     }
@@ -991,7 +991,7 @@ $(function(){
             timeFrom = sliderDiv.slider('values', 0),
             timeTo   = sliderDiv.slider('values', 1);
 
-        if ($.inArray(1, arrDays) === -1){
+        if (jQuery.inArray(1, arrDays) === -1){
             BITMETER.errorDialog.show('You must select at least 1 day before adding this interval to the list');
         } else if (timeFrom >= timeTo){
             BITMETER.errorDialog.show('You must select a time interval covering at least 1 hour before adding this interval to the list');
@@ -1006,7 +1006,7 @@ $(function(){
     
  // Browser detection workaround below for http://bugs.jqueryui.com/ticket/6750   
     sliderDiv.slider({
-        animate: !$.browser.msie,
+        animate: !jQuery.browser.msie,
         range: true,
         values: [6,18],
         orientation : 'horizontal',
@@ -1041,7 +1041,7 @@ $(function(){
     });
 
     $('#createAlertBoxAccordion select.dayList').each(function(n,o){
-        var i, opts = [], days = $.datepicker.regional[''].dayNames;
+        var i, opts = [], days = jQuery.datepicker.regional[''].dayNames;
 
         for(i=0; i<7; i++){
             opts.push('<option value="' + i + '">' + days[i] + '</option>');

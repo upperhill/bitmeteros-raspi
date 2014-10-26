@@ -39,7 +39,7 @@ BITMETER.model = (function(){
         var value = values[key];
         if (typeof(value) === "undefined"){
          // No value stored in memory so check the cookie
-            value = $.cookie(key);
+            value = jQuery.cookie(key);
             if ((value === null) && defaults){
              // No cookie value either but some defaults were provided, so check those
                 value = defaults[key];
@@ -51,7 +51,7 @@ BITMETER.model = (function(){
     function set(key, value, persist){
         values[key] = value;
         if (persist){
-            $.cookie(key, value, {expires : 30});
+            jQuery.cookie(key, value, {expires : 30});
         }
     }
 

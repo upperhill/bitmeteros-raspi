@@ -11,7 +11,7 @@ BITMETER.tabShowPrefs = function(){
 $(function(){
     var colourPickerDialogObj = $('#colourPicker'),
         adapterTableBody      = $('#adapterTable'),
-        colourPickerObj       = $.farbtastic('#colourPickerDiv', function(col){
+        colourPickerObj       = jQuery.farbtastic('#colourPickerDiv', function(col){
             $('#colourPickerTxt').val(col);
         }),
         rowIndex=0,
@@ -113,7 +113,7 @@ $(function(){
         rowIndex++;
     }
     
-    $.each(config.adapters, function(i,o){
+    jQuery.each(config.adapters, function(i,o){
         var hostName = o.hs;
         if (hosts[hostName]){
             hosts[hostName]++;
@@ -135,11 +135,11 @@ $(function(){
     if (adapterCount > 1){
         addRow('', 'Display all data in the database.');
 
-        $.each(hosts, function(hs, ad){
+        jQuery.each(hosts, function(hs, ad){
             addRow(hs);
         });
     
-        $.each(config.adapters, function(i,o){
+        jQuery.each(config.adapters, function(i,o){
             if (hosts[o.hs] > 1){
                 addRow(o.hs + ':' + o.ad);
             }
@@ -198,7 +198,7 @@ $(function(){
         $('#prefsSaveColoursStatus').html('Saving colour choices to the server... <img src="bm/css/images/working.gif" /> ');
         var dlCol = BITMETER.model.getDownloadColour().substr(1),
             ulCol = BITMETER.model.getUploadColour().substr(1);
-        $.ajax({
+        jQuery.ajax({
             url : 'config?web.colour_dl=' + dlCol + '&web.colour_ul=' + ulCol, 
             success : function(){
                 $('#prefsSaveColoursStatus').html('Colour choices saved.');
@@ -232,7 +232,7 @@ $(function(){
             BITMETER.errorDialog.show("Please enter a numeric value for 'Number of Items'");    
         } else {
             $('#prefsRssSaveStatus').html('Saving RSS parameters... <img src="bm/css/images/working.gif" />');
-            $.ajax({
+            jQuery.ajax({
                 url : 'config?web.rss.host=' + rssHostname + '&web.rss.freq=' + rssFreq + '&web.rss.items=' + rssNumItems, 
                 success : function(){
                     $('#prefsRssSaveStatus').html('RSS parameters saved.');
@@ -254,7 +254,7 @@ $(function(){
  // Handler for the Save... button on the Server Name tab       
     $('#prefsServerNameSave').button().click(function(){
         $('#prefsServerNameSaveStatus').html('Saving Server Name... <img src="bm/css/images/working.gif" />');
-        $.ajax({
+        jQuery.ajax({
             url : 'config?web.server_name=' + $('#prefServerName').val(), 
             success : function(){
 				window.location.reload();
@@ -335,7 +335,7 @@ $(function(){
                     '&web.history_interval=' + BITMETER.model.getHistoryRefresh() + 
                     '&web.summary_interval=' + BITMETER.model.getSummaryRefresh(); 
             $('#prefsRefreshSaveStatus').html('Saving Refresh Intervals... <img src="bm/css/images/working.gif" />');
-            $.ajax({
+            jQuery.ajax({
                 url : url, 
                 success : function(){
                     $('#prefsRefreshSaveStatus').html('Refresh Intervals saved.');

@@ -14,7 +14,7 @@ BITMETER.updateMonitor = function(){
         var dlData = [], ulData = [];
 
      // Split the data into 2 arrays, one for UL and one for DL
-        $.each(jsonData, function(i,o){
+        jQuery.each(jsonData, function(i,o){
             dlData.push([o.ts, o.dl]);
             ulData.push([o.ts, o.ul]);
         });
@@ -37,7 +37,7 @@ BITMETER.updateMonitor = function(){
             ts;
 
      // Loop through all the data currently displayed on the graph and accumulate totals, peaks and best-fit current values
-        $.each(jsonData, function(i,o){
+        jQuery.each(jsonData, function(i,o){
             dlTotal += o.dl;
             if (o.dl > dlPeak){
                 dlPeak = o.dl;
@@ -96,7 +96,7 @@ BITMETER.updateMonitor = function(){
                 prevTs = 0, allData;
             
          // The loop will start with the newest data (smallest 'ts' offset values) and move backwards through time
-//            $.each(responseData, function(i, o){
+//            jQuery.each(responseData, function(i, o){
              /* Look for a gap between this ts and the last one we saw, if there is a gap create new objects with empty
                 DL and UL values and push them onto the zeroData array */
 /*                var ts = o.ts - 1;
@@ -175,7 +175,7 @@ BITMETER.stopwatch = (function(){
     };
     function getTotalsAfterTs(ts, data){
         var dlTotal = 0, ulTotal = 0;
-        $.each(data, function(i,o){
+        jQuery.each(data, function(i,o){
             if (o.ts < ts) {
                 dlTotal += o.dl;   
                 ulTotal += o.ul;
@@ -283,7 +283,7 @@ $(function(){
         swUlMin   = $('#swUlMin');
 
     function setupGraph(){
-        BITMETER.monitorGraph = $.plot(monitorDisplayObj, [{color: BITMETER.model.getDownloadColour(), data: []}, {color: BITMETER.model.getUploadColour(), data: []}], {
+        BITMETER.monitorGraph = jQuery.plot(monitorDisplayObj, [{color: BITMETER.model.getDownloadColour(), data: []}, {color: BITMETER.model.getUploadColour(), data: []}], {
                 yaxis: {min: 0, ticks : BITMETER.makeYAxisIntervalFn(5), tickFormatter: BITMETER.formatAmount},
                 xaxis: {max: BITMETER.getMonitorTs(), min: 0, tickFormatter: function(v){ 
                      // The horizontal scale shows an offset from the current time, in MM:SS format

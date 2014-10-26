@@ -41,9 +41,9 @@ function bitmeter_get(url, success) {
 	var settings = bitmeter_ajaxsetup;
 	settings['url'] = url;
 	settings['success'] = success;
-	$.ajax(settings);
+	jQuery.ajax(settings);
 }
-//$.ajaxSetup(bitmeter_ajaxsetup);
+//jQuery.ajaxSetup(bitmeter_ajaxsetup);
 
 BITMETER.refreshTimer = (function(){
  // Manages the automatic screen refreshes
@@ -162,7 +162,7 @@ BITMETER.assert = (function(){
             }
         };
     }
-    return $.noop;
+    return jQuery.noop;
 }());
 
 BITMETER.getTime = function(){
@@ -172,7 +172,7 @@ BITMETER.getTime = function(){
 
 BITMETER.makeKeyPressHandler = function(){
     var allowed = [];
-    $.each(arguments, function(n,o){
+    jQuery.each(arguments, function(n,o){
         if (typeof o === 'number') {
             allowed.push(o);
             
@@ -192,7 +192,7 @@ BITMETER.makeKeyPressHandler = function(){
     });
 
     return function(evt){
-        if ($.inArray(evt.which, allowed) < 0) {
+        if (jQuery.inArray(evt.which, allowed) < 0) {
             evt.preventDefault();
         }
     };
@@ -574,7 +574,7 @@ $(function(){
     datePickerFormat = $('#createAlertStartFixedDate').datepicker("option", "dateFormat");
     $('#createAlertStartDetailsFormat').html("(" + datePickerFormat + ")");
     
-//    $.ajax({
+//    jQuery.ajax({
 //        url : "http://updates.codebox.org.uk/version/bitmeteros/version2.js", 
 //        dataType : 'script'
 //    });
