@@ -1,0 +1,23 @@
+var config = { 
+	"monitorInterval" : 1000, 
+	"summaryInterval" : 10000,
+	"historyInterval" : 10000, 
+	"monitorIntervalMin" : 1000, 
+	"monitorIntervalMax" : 30000, 
+	"historyIntervalMin" : 5000, 
+	"historyIntervalMax" : 60000, 
+	"summaryIntervalMin" : 1000, 
+	"summaryIntervalMax" : 60000, 
+	"serverName" : "", 
+	"dlColour" : "#ff0000", 
+	"ulColour" : "#00ff00", 
+	"allowAdmin" : 1, 
+	"version" : "0.7.4", 
+	"rssItems" : 10, 
+	"rssFreq" : 1, 
+	"rssHost" : "", 
+	"adapters" : [{
+		"hs" : "local",
+		"ad" : "venet0"
+	}] 
+};
