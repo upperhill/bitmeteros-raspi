@@ -9,7 +9,7 @@ BITMETER.tabShowQuery = function(){
 };
 
 $(function(){
-    var queryResultsGridObj, dateFormat, queryDialog, datePickerOpts = { showOn: 'button', buttonImage: '/css/images/calendar.gif' };
+    var queryResultsGridObj, dateFormat, queryDialog, datePickerOpts = { showOn: 'button', buttonImage: 'bm/css/images/calendar.gif' };
 
     function runQuery(){
         var fd, td, errList=[], df, reqTxt;
@@ -35,10 +35,10 @@ $(function(){
 
         if (errList.length === 0){
          // The date values were ok, so continue
-            $('#queryStatusBox').html('Searching... <img src="css/images/working.gif" alt="search in progress" />');
+            $('#queryStatusBox').html('Searching... <img src="bm/css/images/working.gif" alt="search in progress" />');
             $('#queryExportLink').hide();
-            reqTxt = BITMETER.addAdaptersToRequest('query?from=' + fd + '&to=' + td + '&group=' + $('#queryDisplay').val());
-            $.get(reqTxt, function(results){
+            reqTxt = BITMETER.addAdaptersToRequest('ajax.php?choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&from=' + fd + '&to=' + td + '&group=' + $('#queryDisplay').val());
+            bitmeter_get(reqTxt, function(results){
                  // Store the results, adding in combined totals - we need them elsewhere
                     $.each(results, function(i,o){
                         o.cm = o.dl + o.ul;

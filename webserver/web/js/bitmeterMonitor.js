@@ -79,8 +79,8 @@ BITMETER.updateMonitor = function(){
     }
 
  // Sends the AJAX request to get the Monitor data
-    var reqTxt = BITMETER.addAdaptersToRequest('monitor?ts=' + BITMETER.getMonitorTs());
-    $.get(reqTxt, function(response){
+    var reqTxt = BITMETER.addAdaptersToRequest('ajax.php?choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&ts=' + BITMETER.getMonitorTs());
+    bitmeter_get(reqTxt, function(response){
             /* The response is formatted as follows, with the 'ts' values being offsets from the serverTime:
                 { serverTime : 123456, 
                       data : [
@@ -96,10 +96,10 @@ BITMETER.updateMonitor = function(){
                 prevTs = 0, allData;
             
          // The loop will start with the newest data (smallest 'ts' offset values) and move backwards through time
-            $.each(responseData, function(i, o){
+//            $.each(responseData, function(i, o){
              /* Look for a gap between this ts and the last one we saw, if there is a gap create new objects with empty
                 DL and UL values and push them onto the zeroData array */
-                var ts = o.ts - 1;
+/*                var ts = o.ts - 1;
                 while(ts > prevTs){
                     zeroData.push({ts : ts, dl : 0, ul : 0, dr : 1});   
                     ts--;
@@ -112,7 +112,8 @@ BITMETER.updateMonitor = function(){
             allData.sort(function(o1,o2){
                 return o1.ts - o2.ts;
             });
-            
+  */
+allData = responseData;          
          // Finally update the display with the new data
             updateMonitorGraph(allData, BITMETER.monitorGraph, 1, BITMETER.model.getMonitorShowDl(), BITMETER.model.getMonitorShowUl());
             updateFigures(allData);
@@ -306,7 +307,7 @@ $(function(){
     
  // Stretch the graph when the window is resized
     $(window).resize(function() {
-        var graphWidth = panel.width() - readoutWidth - 50;
+        var graphWidth = panel.width() - $('#monitorReadout table').width() - 50;
         if (graphWidth > 200){
             monitorDisplayObj.width(graphWidth);
             setupGraph();

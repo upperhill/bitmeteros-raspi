@@ -1,10 +1,12 @@
 /*global $,BITMETER,window,config*/
 /*jslint nomen: true, bitwise: true, regexp: true, newcap: true, sloppy: true, white: true, unparam: true, plusplus: true, ass: true */
 
-$.ajaxSetup({
+var bitmeter_ajaxsetup = {
     cache: false,
     timeout: 30000,
     error : function (xhrObj, errType) {
+			//console.log(xhrObj);
+			//console.log(errType);
             var msg;
             if (errType === "error") {
                 if (xhrObj.status === 0) {
@@ -22,7 +24,9 @@ $.ajaxSetup({
             } else {
                 msg = "An error occurred while attempting to communicate with the server: " + errType;
             }
+			if (xhrObj.status !== 0 && xhrObj.status !== 200) {
             BITMETER.errorDialog.show(msg);
+			}
         },
     dataFilter : function (data, dataType) {
         if (dataType !== 'script' && !data){
@@ -32,7 +36,14 @@ $.ajaxSetup({
         BITMETER.errorDialog.hide();
         return data;
     }
-});
+};
+function bitmeter_get(url, success) {
+	var settings = bitmeter_ajaxsetup;
+	settings['url'] = url;
+	settings['success'] = success;
+	$.ajax(settings);
+}
+//$.ajaxSetup(bitmeter_ajaxsetup);
 
 BITMETER.refreshTimer = (function(){
  // Manages the automatic screen refreshes
@@ -83,7 +94,8 @@ BITMETER.infoFloat = (function(){
     };
 
     function mouseMoveHandler(e){
-        guiBox.css({'left' : e.pageX + 15, 'top' : e.pageY });
+		//guiBox.css({'left' : e.pageX + 15, 'top' : e.pageY });
+		guiBox.css({'left' : (e.pageX) + 15, 'top' : (e.pageY - $(this).parent().parent().parent().parent().offset().top)  });
     }
 
     float.show = function(el, evObj, html){
@@ -419,6 +431,7 @@ BITMETER.formatAmount = (function(){
         PB_MIN = TB_MIN * K;
 
     return function (amt, hideDp){
+	amt = Number(amt);
         var numAmt, units, dp = hideDp ? 0 : 2;
         if (amt < KB_MIN) {
             numAmt = amt.toFixed(dp);
@@ -507,7 +520,7 @@ BITMETER.makeYAxisIntervalFn = function(targetTickCount){
 $(function(){
     var datePickerFormat, serverNameSuffix;
  // Set up the event handlers for the tabs across the top of the screen
-    $("#tabs").tabs({
+    $("#bwtabs").tabs({
             show: function(event, ui) {
                  // If there was a refresh timer active for the previous tab then clear it
                     BITMETER.refreshTimer.clear();
@@ -561,10 +574,10 @@ $(function(){
     datePickerFormat = $('#createAlertStartFixedDate').datepicker("option", "dateFormat");
     $('#createAlertStartDetailsFormat').html("(" + datePickerFormat + ")");
     
-    $.ajax({
-        url : "http://updates.codebox.org.uk/version/bitmeteros/version2.js", 
-        dataType : 'script'
-    });
+//    $.ajax({
+//        url : "http://updates.codebox.org.uk/version/bitmeteros/version2.js", 
+//        dataType : 'script'
+//    });
 });
 
 BITMETER.showVersion = function(data){
@@ -586,7 +599,7 @@ BITMETER.showVersion = function(data){
     if (isNewVersion(config.version, data.number)){
         $('#newVersion h2').append(data.number);
         $('#newVersionDownload').attr('href', data.url);
-        $("#tabs").tabs("add", "#newVersion", "New Version");
+        $("#bwtabs").tabs("add", "#newVersion", "New Version");
         $('#newVersionInfo').html(data.description);
         $('#version').show();
         $('#newVersion').show();

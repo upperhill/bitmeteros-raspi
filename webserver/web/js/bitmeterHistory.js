@@ -45,8 +45,8 @@ BITMETER.updateHistory = function(){
  /* Sends the AJAX request for the Minutes graph. The results returned by a /query request don't have sufficient
     granularity for what we need here, so call /monitor instead, and sort the values in minute-sized groups. */
     minGraphTs     = BITMETER.historyDisplayMinutes.getOptions().xaxis.max;
-    minGraphReqTxt = BITMETER.addAdaptersToRequest('monitor?ts=' + 60 * BITMETER.getHistoryMinutesTs());
-    $.get(minGraphReqTxt, function(response){
+    minGraphReqTxt = BITMETER.addAdaptersToRequest('ajax.php?g=MINUTES_GRAPH&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&ts=' + 60 * BITMETER.getHistoryMinutesTs());
+    bitmeter_get(minGraphReqTxt, function(response){
             /* We get back an object like this, with ts values expressed as an offset from the serverTime value:
                 { serverTime : 123456, 
                   data : [
@@ -98,8 +98,8 @@ BITMETER.updateHistory = function(){
     /* Sends the AJAX request for the Hours graph */
     hourGraphMax = now;
     hourGraphMin = now - BITMETER.historyDisplayHours.getOptions().xaxis.max;
-    hourGraphReqTxt = BITMETER.addAdaptersToRequest('query?from=' + hourGraphMin + '&to=' + hourGraphMax + '&group=1');
-    $.get(hourGraphReqTxt, function(jsonData){
+    hourGraphReqTxt = BITMETER.addAdaptersToRequest('ajax.php?g=HOURS_GRAPH&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&from=' + hourGraphMin + '&to=' + hourGraphMax + '&group=1');
+    bitmeter_get(hourGraphReqTxt, function(jsonData){
             var now = BITMETER.getTime(),
                 modSeconds = now % 3600,
                 secondsUntilNextFullHour = (modSeconds === 0 ? 0 : 3600 - modSeconds);
@@ -110,8 +110,8 @@ BITMETER.updateHistory = function(){
     /* Sends the AJAX request for the Days graph */
     dayGraphMax = now;
     dayGraphMin = now - BITMETER.historyDisplayDays.getOptions().xaxis.max;
-    dayGraphReqTxt = BITMETER.addAdaptersToRequest('query?from=' + dayGraphMin + '&to=' + dayGraphMax + '&group=2');
-    $.get(dayGraphReqTxt, function(jsonData){
+    dayGraphReqTxt = BITMETER.addAdaptersToRequest('ajax.php?g=DAYS_GRAPH&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&from=' + dayGraphMin + '&to=' + dayGraphMax + '&group=2');
+    bitmeter_get(dayGraphReqTxt, function(jsonData){
             var now = BITMETER.getTime(),
                 modSeconds = now % 86400,
                 secondsUntilNextFullDay = (modSeconds === 0 ? 0 : 86400 - modSeconds);
@@ -442,7 +442,7 @@ $(function(){
  // Stretch the graphs when the window is resized
     panel = $('#history');
     $(window).resize(function() {
-        var graphWidth = panel.width() -50;
+        var graphWidth = panel.width() - $('.historyScale').width() -50;
         if (graphWidth > 200){
             historyDisplayMinutesObj.width(graphWidth);
             setupMinutesGraph();

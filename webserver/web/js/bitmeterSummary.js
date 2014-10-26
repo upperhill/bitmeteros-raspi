@@ -57,8 +57,8 @@ BITMETER.tabShowSummary = function(){
 			}
 		}
 		
-		var reqTxt = BITMETER.addAdaptersToRequest('summary');
-		$.get(reqTxt, function(objSummary){
+		var reqTxt = BITMETER.addAdaptersToRequest('ajax.php?g=SUMMARY_PAGE&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&summary=1');
+		bitmeter_get(reqTxt, function(objSummary){
 			 // Get the next set of summary data from the server and display it
 				BITMETER.model.setSummary(objSummary);
 				populateSummary();

@@ -195,7 +195,7 @@ $(function(){
     $('#prefsColoursRemote, #prefsColoursLocal').button();
     $('#prefsColoursRemote').click(function(){
         setColoursOnModel();
-        $('#prefsSaveColoursStatus').html('Saving colour choices to the server... <img src="css/images/working.gif" /> ');
+        $('#prefsSaveColoursStatus').html('Saving colour choices to the server... <img src="bm/css/images/working.gif" /> ');
         var dlCol = BITMETER.model.getDownloadColour().substr(1),
             ulCol = BITMETER.model.getUploadColour().substr(1);
         $.ajax({
@@ -231,7 +231,7 @@ $(function(){
         if (!rssNumItems){
             BITMETER.errorDialog.show("Please enter a numeric value for 'Number of Items'");    
         } else {
-            $('#prefsRssSaveStatus').html('Saving RSS parameters... <img src="css/images/working.gif" />');
+            $('#prefsRssSaveStatus').html('Saving RSS parameters... <img src="bm/css/images/working.gif" />');
             $.ajax({
                 url : 'config?web.rss.host=' + rssHostname + '&web.rss.freq=' + rssFreq + '&web.rss.items=' + rssNumItems, 
                 success : function(){
@@ -253,7 +253,7 @@ $(function(){
     
  // Handler for the Save... button on the Server Name tab       
     $('#prefsServerNameSave').button().click(function(){
-        $('#prefsServerNameSaveStatus').html('Saving Server Name... <img src="css/images/working.gif" />');
+        $('#prefsServerNameSaveStatus').html('Saving Server Name... <img src="bm/css/images/working.gif" />');
         $.ajax({
             url : 'config?web.server_name=' + $('#prefServerName').val(), 
             success : function(){
@@ -334,7 +334,7 @@ $(function(){
             var url = 'config?web.monitor_interval=' + BITMETER.model.getMonitorRefresh() + 
                     '&web.history_interval=' + BITMETER.model.getHistoryRefresh() + 
                     '&web.summary_interval=' + BITMETER.model.getSummaryRefresh(); 
-            $('#prefsRefreshSaveStatus').html('Saving Refresh Intervals... <img src="css/images/working.gif" />');
+            $('#prefsRefreshSaveStatus').html('Saving Refresh Intervals... <img src="bm/css/images/working.gif" />');
             $.ajax({
                 url : url, 
                 success : function(){

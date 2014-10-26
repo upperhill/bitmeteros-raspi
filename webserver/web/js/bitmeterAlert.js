@@ -4,7 +4,7 @@
 BITMETER.tabShowAlerts = function(){
     function deleteAlert(alert){
         BITMETER.confirmDialog.show("Delete " + alert.name + " - are you sure?", function(){
-            $.get('alert?action=delete&id=' + alert.id, BITMETER.tabShowAlerts);
+            bitmeter_get('ajax.php?g=ALERTS&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&action=delete&id=' + alert.id, BITMETER.tabShowAlerts);
         });
     }
 
@@ -201,7 +201,7 @@ BITMETER.updateAlertProgressBars = function(){
     }
 
  // Loop once for each alert
-    $.get('alert?action=status', function(jsonData){
+    bitmeter_get('ajax.php?g=ALERTS&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&action=status', function(jsonData){
         $.each(jsonData, function(i,o){
             var value = o.current / o.limit,
                 barValue, statusTxt = (Math.round(value * 100) + '%');
@@ -805,9 +805,9 @@ BITMETER.updateCreateAlertViewFromModel = function(isUserEdit){
             }
 
             if (BITMETER.createAlertModel.getId()){
-                url = 'alert?action=update&id=' + BITMETER.createAlertModel.getId();
+                url = 'ajax.php?g=ALERTS&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&action=update&id=' + BITMETER.createAlertModel.getId();
             } else {
-                url = 'alert?action=create';
+                url = 'ajax.php?g=ALERTS&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&action=create';
             }
 
 
@@ -818,7 +818,7 @@ BITMETER.updateCreateAlertViewFromModel = function(isUserEdit){
             url += '&bound=' + makeBoundParam();
             url += '&periods=' + makePeriodsParam();
 
-            $.get(url, function(){
+            bitmeter_get(url, function(){
                 BITMETER.hideCreateAlertBox();
                 BITMETER.tabShowAlerts();
             });
