@@ -116,7 +116,7 @@ BITMETER.tabShowAlerts = function(){
     }
 
     function updateAlerts(){
-        jQuery.get('alert?action=list', function(alertsArray){
+		bitmeter_get('ajax.php?g=ALERTS&choice=vps_bandwidth&monitortarget=' + $("#monitortarget").val() + '&sessionid=' + $("#sessionidstore").val() + '&action=list', function(alertsArray){
             if (alertsArray && alertsArray.length){
                 $('#noAlerts').hide();
                 $('#alertsDisplay').show();
