@@ -30,7 +30,8 @@ http://localhost:2605/index.html
  
  sudo /etc/init.d/bitmeterweb restart
 
-** Important Note**
+**Important Note**
+
 By default BitMeter writes updates to its database at 1 second intervals. To increase this interval, use the bmdb setconfig command to change the cap.write_interval value. For example, to change the interval to 5 seconds, use the following command:
 
  > bmdb setconfig cap.write_interval 5
