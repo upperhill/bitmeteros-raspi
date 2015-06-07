@@ -10,7 +10,7 @@ BitMeter is a great solution for keeping a close eye on your internet bandwidth 
 ```shell
 git clone https://github.com/upperhill/bitmeteros-raspi/
 
-cd https://github.com/upperhill/bitmeteros-raspi/
+cd bitmeteros-raspi/
 
 sudo ./install.sh
 
